@@ -17,6 +17,17 @@ if echo text | grep -q tex ; then
     echo "exit code must have been zero"
 fi
 
+# _ ; _ just runs both commands
+# _ && _ returns 0 if both commands' exit codes were 0
+  # runs first command, if it was nonzero, then we stop there
+# _ || _ returns 0 if either commands' exit code was 0
+  # runs first command, if it was zero, then we stop there
+# this behavior is called "short-circuiting"
+
+echo text | grep -q tex && echo "previous command successful"
+
+echo text | grep -q tex || echo "previous command unsuccessful"
+
 if [[ 4 == 3 || 5 -gt 4 ]] ; then
     echo "exit code must have been zero"
 fi
@@ -36,3 +47,30 @@ echo $data
 
 echo you entered: "$@"
 echo all done
+
+printarg () {
+  variable=1
+  echo $1
+  echo $2
+}
+
+echo $variable
+printarg $@
+echo $variable
+
+# normally, variables are "global scope"
+
+# brace expansion
+
+# command substitution
+echo $(echo 4) + $(echo 1) = 5
+echo current dir is $(pwd)
+echo current dir is `pwd`
+
+# grep for filtering/searching text
+# find for searching for files (can execute a command for each file)
+# printf for formatting text in more complex ways than echo
+# sed for replacing text based on patterns (regex)
+# awk for parsing text and processing it
+# xargs for dynamically building one command's arguments from another command's output
+# curl/wget for downloading webpages (or sending any http requests)
