@@ -6,7 +6,7 @@
 
 # this replaces the previous function
 # default arguments
-def output(item, some_arg=3, separator=' '):
+def output(item, some_arg=3, separator: str = ' ') -> None:
     # use try-except-finally when you expect
     # an error might occur, and you want to handle it.
     # try block contains the code that might raise the error
