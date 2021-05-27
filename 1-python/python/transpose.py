@@ -9,16 +9,21 @@ def transpose(lines: str) -> str:
     for colnum in range(input_width):
         output = ''
         for rownum in range(input_height):
-            row = input_list[rownum]
-            if colnum >= len(row):
-                char = '*'
-            else:
-                char = row[colnum]
-            output += char
+            output += get_char(input_list, rownum, colnum)
         output = output.rstrip('*').replace('*', ' ')
         output_list.append(output)
 
     return '\n'.join(output_list)
+
+def get_char(input_list, rownum, colnum):
+    # row = input_list[rownum]
+    # if colnum >= len(row):
+    #     return '*'
+    # return row[colnum]
+    try:
+        return input_list[rownum][colnum]
+    except IndexError:
+        return '*'
 
 def get_input_width(input_list):
     # max_length = 0
@@ -38,7 +43,7 @@ def get_input_width(input_list):
 
     # generator expression
     # an expression that acts like a sequence, that's not built yet
-    max_length = max(len(x) for x in input_list, default=0)
+    max_length = max((len(x) for x in input_list), default=0)
 
     return max_length
 
