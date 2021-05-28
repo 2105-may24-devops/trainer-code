@@ -1,0 +1,24 @@
+p0-
+some python app that works with the file system.
+either as its core feature set:
+    file system navigator
+    disk usage summarizer?
+or some app that stores or processes data in files (maybe pickle format, or some text format like csv):
+    bank account manager
+    expense tracking system (e.g. roommate expense splitting)
+    retail store ordering/inventory system
+must be something that you can make a simple crappy version of in a day,
+    but you can imagine several directions for improving and extending it.
+"how much do i have to implement?" "what are my exact requirements?"
+    impress me! and keep pace with your fellow batchmates.
+recommended:
+    have both interactive mode...
+        (looking at input() from the user,
+        and/or using a package like pynput to read individual key presses directly
+        without the user having to press "enter")
+        (consider the blessings package for a text-based UI)
+    ...and non-interactive mode
+        (accepting some command-line arguments using the argparse module, or sys.argv directly,
+        to do some operations or outputting without needing the user to type more
+        - so it could be used in a automated script
+i'll be glad to help guide anybody's brainstorming on features or on implementation details.
