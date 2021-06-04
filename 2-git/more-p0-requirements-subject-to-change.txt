@@ -1,0 +1,46 @@
+requirements
+tasks to ensure the latest version of python3, python3-venv, and git are installed
+a playbook that downloads the code from github (or copies it from the control node),
+    creates a venv to run the code in,
+    uses requirements.txt to install dependencies into that venv,
+    and creates some files to serve as a good initial state for your app
+a playbook that tests your app by running a bash script
+    the bash script should run your app non-interactively in several ways,
+    using one or more sets of prepared data files so the app's behavior is predictable.
+    if one of the tests fails, output the relevant info to stderr, and exit nonzero.
+    (maybe you can even figure out some testing of the interactive parts of your app!)
+a playbook to uninstall your app
+
+your app should be configurable with environment variables, command-line arguments,
+or configuration files so that the tests can run without reading the "real data"
+that is normally used by the program, if applicable.
+
+after the playbook that installs your app runs, you should be able to run something like
+    `ssh -t vm1 "~/nick/venv/bin/python3 ~/nick/my_app.py"`
+and have the app work correctly.
+
+the playbooks should work nicely in case of an update to your app
+(you shouldn't have to remove your app before redeploying)
+
+suggestion: become able to deploy your app at any git commit, not just the tip
+    of your default branch.
+
+add some sort of logging to your python app, even something as simple as
+    writing to a log file the most recent time your app was run.
+write an ansible playbook that will access and display that info
+
+the ansible material you present should ideally be open to extension. i'm not going
+over windows hosts yet, but imagine what parts would need to change if some of the
+hosts were windows. imagine if i wanted you to install, not just your app, but also
+two other people's apps in separate venvs - how much would you have to change to
+avoid a bunch of duplication in your ansible files?
+
+bonus: create your own ansible module. e.g., have some complexity to the logging
+you're doing, and write a module that can query those logs to check if particular
+events or errors have occurred (e.g. someone repeatedly using a wrong password to
+try to log into something in your app).
+
+the plagiarism threshold is the same for ansible stuff as it is for the python stuff
+
+if i give you a brand new VM host to add to your inventory day-of-presentation,
+you should be able to demonstrate your playbooks in action on it.
