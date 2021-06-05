@@ -1,0 +1,91 @@
+ansible (aka ansible engine): made in 2012, open source, owned by red hat
+enterprise version with bells and whistles: ansible tower
+
+ansible automations (playbooks) use are meant to be:
+relatively human readable (definitely more than a bash script)
+uses YAML format, meant to be versioned, not some GUI ('infrastructure as code')
+if you built something like this yourself, as you made it more sophisticated
+    you'd probably start relying on a specific machine being the one to
+    orchestrate all the work from, with useful tools installed. we call that an "agent"
+ansible is agentless, it's meant to work consistently wherever you run it.
+cross-platform (no windows though!)
+ansible you can describe any change you want to make to a system or application it via ansible playbooks
+
+playbooks contain tasks, executed sequentially
+tasks invoke modules
+modules are code that runs on the hosts we want to configure.
+    we can write our own modules in usually python, powershell, or bash, but whatever else too.
+    modules can take arguments to be flexible
+in the simple case, a playbook has only one "play" of tasks, but it could have more than one
+    e.g.if you want one playbook to run different things on different hosts
+ansible is meant to be declarative, not imperative.
+you use well-abstracted modules to declare the state you want, not specify a list of
+    actions to take. ansible should figure out if it needs to take actions or if we're
+    already in the desired state.
+
+ansible keeps track of an "inventory" of hosts aka "managed nodes",
+    the computers you want to manage configuration on with ansible.
+    hosts can be arranged in different groups in the inventory and targetted on that basis
+the modules run on the hosts in the inventory.
+we can hardcode things in the inventory, and/or have it dynamically reflect cloud resources of some kind.
+there's no reason to install ansible on the hosts themselves.
+
+ansible supports plugins to extend the functions of ansible itself.
+
+https://docs.ansible.com/ansible/latest/user_guide/sample_setup.html
+
+not everything has to be a playbook.
+run modules against hosts imperatively like:
+    `ansible <host group> -m <module>
+
+"command" module for running any one command, without a shell (more predictable behavior).
+"shell" and "script" modules for running a command with a shell (so you can use things like | and > and env vars)
+    but it's bad practice to use these for everything, plus it's awkward to
+        deal with ansible/python's escape character syntax on top of YAML's.
+    encapsulate logic in well-abstracted reusable modules.
+
+https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html
+other useful modules:
+- ping: to check basic connectivity
+- setup: to print most of what ansible knows about the host
+- lineinfile / replace: check or edit file contents based on regex patterns
+- git: clone a git repo
+- copy: copy files to the remote
+- apt: interface with apt command on ubuntu to install software
+- pip: interface with pip
+
+inventory:
+    hosts
+    groups (of hosts)
+    variables
+    sources (like a connection to the cloud for a set of VMs)
+
+playbook:
+    name (human description)
+    hosts
+    variables
+    tasks:
+        name
+    handlers
+        another kind of task, run at the end of the play
+            if at least one task scheduled it to run
+
+role:
+    playbooks and other resources in a directory structure that have a common purpose
+
+collection:
+    any kind of ansible thing (modules, playbooks, etc) packaged into a unit for distribution
+    managed with `ansible-galaxy` command
+    (e.g. azure can make playbook templates that you can start from for working with azure resources,
+    other cloud providers have collections too)
+    you can make your own
+
+best practices:
+    use variables for more maintainable and flexible stuff
+        be aware of the precedence rules for which variable sources override which others
+    use names to document stuff and make errors easier to interpret
+        task names, playbook names, host aliases
+    use dynamic inventories when possible (reduce human error)
+        you can define your own dynamic inventories
+    use yaml multiline string or mapping syntaxes instead of awkward long lines
+    use the ansible playbook linter to enforce style practices
