@@ -23,11 +23,11 @@ implement CI in azure pipelines
         tested
             any available automatable tests should run.
             if there are failures, the build should fail.
-            if possible, collect the test results in a format that can be
+            collect the test results in a format that can be
                 published to the build in Azure Pipelines.
         analyzed
-            someone will need to set up a sonarqube instance on one of my VMs
-            for everyone to use.
+            we have 9 teams and 4 of my VMs; groups of 2 or 3 teams will set up and share
+            each sonarqube instance (see p1 excel sheet).
             (either write a playbook for that, or at least carefully document
             the steps followed.)
             use sonar scanner to run an analysis on the source code.
@@ -45,5 +45,12 @@ implement CI in azure pipelines
         the same things should happen, so that updates to this dependency of the
         app are incorporated into the app.
 
-    suggested: allow feature branches and/or pull requests to trigger
-        your pipeline(s) too.
+    there should be a sensible workflow for pull requests, so that PRs to the
+        mainline branch trigger most of the CI checks (without the deployment part),
+        and PRs can't be merged if the build fails.
+
+    there should be notifications of significant events like build failures on
+        the mainline branch, probably to a slack channel. use your judgment
+        to decide if any other events are worthy of notification.
+
+    suggested: run health checks against the running app after deployment.
