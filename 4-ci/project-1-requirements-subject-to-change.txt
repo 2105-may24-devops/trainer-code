@@ -16,6 +16,9 @@ Dockerize the application, including its database, and write a compose file.
     make it convenient to get up and running with a local instance of the
     application. run any tests during the Docker image build as well.
 
+have a project board in Azure Boards using the Agile process tracking
+your work items for this project.
+
 implement CI in azure pipelines
     if there's a push to the webapp repo on the default branch,
     then the code should be automatically:
@@ -41,9 +44,15 @@ implement CI in azure pipelines
             you can do this either in YAML, or with classic release pipelines
                 triggered from your YAML pipeline.
 
-    if there's a push to the ORM repo on the default branch,
-        the same things should happen, so that updates to this dependency of the
-        app are incorporated into the app.
+    dependency issues...
+        "if there's a push to the ORM repo on the default branch,
+            the same things should happen, so that updates to this dependency of the
+            app are incorporated into the app."
+        OR...
+        "we need the pipeline to support somehow not using the
+            latest version of the ORM code for the webapp, just in case we're not
+            ready for it yet."
+        consider your options and be able to justify your choice and your implementation.
 
     there should be a sensible workflow for pull requests, so that PRs to the
         mainline branch trigger most of the CI checks (without the deployment part),
@@ -52,5 +61,11 @@ implement CI in azure pipelines
     there should be notifications of significant events like build failures on
         the mainline branch, probably to a slack channel. use your judgment
         to decide if any other events are worthy of notification.
+
+    sonar issues for the codebase should be triaged as best as you can (leave them open if you're not sure).
+    quality profile should be edited if you think it better corresponds to the practices of the team.
+    (activating inactive rules, deactivating other rules, editing rule parameters)
+
+    suggested: ensure pull requests cannot be merged if the quality gate fails.
 
     suggested: run health checks against the running app after deployment.
