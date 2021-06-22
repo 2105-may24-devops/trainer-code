@@ -34,8 +34,10 @@ implement CI in azure pipelines
             (either write a playbook for that, or at least carefully document
             the steps followed.)
             use sonar scanner to run an analysis on the source code.
+            use someone's 14-day free trial to get access to PR and branch analysis in sonarqube,
+            or, if you must, use sonarcloud instead.
             (suggested: if the quality gate in sonarcloud fails, don't
-                deploy to one of the below environments?)
+                deploy to one of the below environments)
         deployed to two dev environments:
             1) one using Docker on one of my VMs
             2) one not using Docker on a VM you create
