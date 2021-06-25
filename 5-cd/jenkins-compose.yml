@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  jenkins:
+    containerName: nick-jenkins
+    image: nick-jenkins:latest
+    build:
+      dockerfile: jenkins.Dockerfile
+      context: .
+    ports:
+    - 9077:8080
+    volumes:
+    - jenkins_home:/var/jenkins_home
+
+volumes:
+- jenkins_home
