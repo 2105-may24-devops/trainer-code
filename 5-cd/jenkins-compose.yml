@@ -2,7 +2,7 @@ version: '3'
 
 services:
   jenkins:
-    containerName: nick-jenkins
+    container_name: nick-jenkins
     image: nick-jenkins:latest
     build:
       dockerfile: jenkins.Dockerfile
