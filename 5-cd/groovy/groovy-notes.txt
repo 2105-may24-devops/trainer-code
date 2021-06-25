@@ -1,19 +1,19 @@
 groovy
 
 type inference like python
-    type method returns and variables with the type,
-    or, use "def" to let groovy figure it out
-single-quoted strings  'abc'
-double-quoted strings support string interpolation  ${}  "a${2+2}c"
+    type method returns and variables with the type like java,
+    or, use "def" to let groovy figure it out like python
+single-quoted strings:  'abc'
+double-quoted strings support string interpolation:  ${}  "a${2+2}c"
     can leave out the {} when it's unambiguous.
-multiline strings ''' ''' and """ """
-coerce any value to a boolean like javascript
+multiline strings: ''' ''' and """ """
+coerce any value to a boolean like python and javascript
     empty collections and strings are false, zero is false, objects are true
 ===, !==, and is() method for reference equality
-method pointer operator, get a reference to a method instead of calling it  .&
-spread operator like map() in python  *.
-spread lists into lists or method arguments like python  *
-in operator like python  'data' in list
+method pointer operator, get a reference to a method instead of calling it:  .&
+spread operator like map() in python:  *.
+spread lists into lists or method arguments like python:  *
+"in" operator like python:  'data' in list
 classes and constructors like python
 interfaces that define required sets of methods for classes without implementations
 abstract classes that are somewhere in between
@@ -36,10 +36,10 @@ groovy scripts
         and can be changed from outside it. more like bash environment variables.
 
 execute a command-line process  "ls -l".execute()
-list literals  []  [1, 2] (ArrayList)
-indexing in reverse or with ranges  list[-1]  list[3..5]
-maps  [:]  [one: 1, two: 2] (LinkedHashMap)
-    get values with indexing or dot  map.one  map['one']
+list literals:  []  [1, 2] (ArrayList)
+indexing in reverse or with ranges:  list[-1]  list[3..5]
+maps:  [:]  [one: 1, two: 2] (LinkedHashMap)
+    get values with indexing or dot:  map.one  map['one']
 iterate over collections with each and eachWithIndex (like enumerate in python) methods
 manipulating lists http://www.groovy-lang.org/groovy-dev-kit.html#_manipulating_lists
 manipulating maps http://www.groovy-lang.org/groovy-dev-kit.html#Collections-Maps
