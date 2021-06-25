@@ -14,3 +14,4 @@ services:
 
 volumes:
   jenkins_home:
+    external: true
