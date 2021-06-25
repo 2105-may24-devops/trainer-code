@@ -11,7 +11,8 @@ USER root
 RUN apt-get update \
 && apt-get install -y \
     python3 \
-    python3-venv
+    python3-venv \
+    python3-pip
 # drop back to the regular jenkins user - good practice
 USER jenkins
 RUN python3 -m pip install --user ansible
