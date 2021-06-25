@@ -1,0 +1,51 @@
+groovy
+
+type inference like python
+    type method returns and variables with the type,
+    or, use "def" to let groovy figure it out
+single-quoted strings  'abc'
+double-quoted strings support string interpolation  ${}  "a${2+2}c"
+    can leave out the {} when it's unambiguous.
+multiline string  $/   /$
+coerce any value to a boolean like javascript
+    empty collections and strings are false, zero is false, objects are true
+===, !==, and is() method for reference equality
+method pointer operator, get a reference to a method instead of calling it  .&
+spread operator like map() in python  *.
+spread lists into lists or method arguments like python  *
+in operator like python  'data' in list
+classes and constructors like python
+interfaces that define required sets of methods for classes without implementations
+abstract classes that are somewhere in between
+properties are nice http://www.groovy-lang.org/objectorientation.html#properties
+@annotations that can mark code to be altered or treated differently by something else
+fancy thing called "traits"
+closures in { braces } like python's lambda expressions. implicit parameter "it"
+    http://www.groovy-lang.org/closures.html#_syntax
+exception handling the same as python and java
+
+package names like java - every class/script is in a package, possibly the default one
+importing is based on package names, not on folder heirarchy, though those are
+    the same by convention
+imports from packages like python
+
+groovy scripts
+    code outside a class is turned into a Script class under the hood
+    methods go on that class, statements go into a run() method
+    undeclared variables behave differently, are in scope to the whole script
+        and can be changed from outside it. more like bash environment variables.
+
+execute a command-line process  "ls -l".execute()
+list literals  []  [1, 2] (ArrayList)
+indexing in reverse or with ranges  list[-1]  list[3..5]
+maps  [:]  [one: 1, two: 2] (LinkedHashMap)
+    get values with indexing or dot  map.one  map['one']
+iterate over collections with each and eachWithIndex (like enumerate in python) methods
+manipulating lists http://www.groovy-lang.org/groovy-dev-kit.html#_manipulating_lists
+manipulating maps http://www.groovy-lang.org/groovy-dev-kit.html#Collections-Maps
+all methods added by the GDK http://www.groovy-lang.org/gdk.html
+
+groovy's features make it easy to design DSLs, domain specific languages,
+    to remove unnecessary noise you usually need in a general-purpose language
+builder pattern - one way how
+https://groovy-lang.org/dsls.html#TheDelegatesToannotation-DSLsmadeeasy
