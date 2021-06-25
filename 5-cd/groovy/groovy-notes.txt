@@ -6,7 +6,7 @@ type inference like python
 single-quoted strings  'abc'
 double-quoted strings support string interpolation  ${}  "a${2+2}c"
     can leave out the {} when it's unambiguous.
-multiline string  $/   /$
+multiline strings ''' ''' and """ """
 coerce any value to a boolean like javascript
     empty collections and strings are false, zero is false, objects are true
 ===, !==, and is() method for reference equality
