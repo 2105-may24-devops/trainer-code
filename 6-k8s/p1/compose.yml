@@ -1,0 +1,50 @@
+# using docker-compose version 3
+version: '3'
+# start containers for these networked services
+services:
+  # the postgres database back-end for the airport database
+  airline_db:
+    container_name: airline_db
+    # use the latest version of the postgres image
+    image: jpbulloch5/airline_db:test
+    # always try to restart the database rather than kill and recreate
+    restart: always
+    # set the username/password environment variables
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: airline_db
+    # set up a named volume so that the database will persist
+    # even if the container is erased
+    volumes:
+      - airline_db_volume:/var/lib/postgresql/data
+    ports:
+      - 9050:5432
+  # the pgadmin database front-end that will run in the browser
+  airline_pgadmin:
+    container_name: airline_pgadmin
+    # use the latest image of pgadmin4
+    image: dpage/pgadmin4:latest
+    # always try to restart the database rather than kill and recreate
+    restart: always
+    # set the username/password environment variables
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    # set the outer:inner ports (remember Beoing 737)
+    ports:
+    - 9051:80
+    # the core java build with the logic for the airline terminal
+  airline_terminal:
+    container_name: airline_terminal
+    # use the latest imabe of pgadmin4
+    image: jpbulloch5/revature_p1_webapp:latest
+    # always try to restart the database rather than kill and recreate
+    restart: always
+    # set the outer:inner ports
+    ports:
+    - 9052:8080
+# define the volume used for database persistance
+volumes:
+  airline_db_volume:
+    driver: local

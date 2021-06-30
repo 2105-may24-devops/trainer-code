@@ -1,0 +1,66 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airline-terminal
+  labels:
+    # you can define any labels you want, to categorize things you create in the cluster.
+    app: airline-terminal
+    role: webapp
+  # namespace: default
+spec:
+  replicas: 2
+  # to establish a relationship between different resources,
+  # one of them has a "selector" that matches one or more labels on the other.
+  selector:
+    matchLabels:
+      app: airline-terminal
+      role: webapp
+  template:
+    metadata:
+      labels:
+        app: airline-terminal
+        role: webapp
+    spec:
+      containers:
+      - name: airline-terminal
+        image: jpbulloch5/revature_p1_webapp:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: '250m'
+            memory: '256Mi'
+          limits:
+            cpu: '1000m'
+            memory: '512Mi'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: airline-terminal
+  labels:
+    # you can define any labels you want, to categorize things you create in the cluster.
+    app: airline-terminal
+    role: webapp
+spec:
+  type: NodePort
+  selector: # which pods will this service expose connection to
+    app: airline-terminal
+    role: webapp
+  ports:
+  - port: 8080
+    targetPort: 8080
+# types of services:
+  # ClusterIP (the default type)
+    # the pods that match this service's selector
+    # will be exposed at some IP address visible WITHIN the cluster.
+    # this makes sense for pods that only need to be accessed from within the cluster,
+    # not from outside.
+  # NodePort
+    # same as ClusterIP, AND, a port on all nodes will be open and routed to the pods.
+    # suitable for pods that need to be accessed from outside the cluster.
+    # get to those pods at: http://[any-node-ip]:[node-port]
+  # LoadBalancer
+    # same as NodePort, AND, relies on some non-builtin implemention of load balancing,
+    # especially one provided by the cloud vendor like Azure, AWS, GCP.
+    # we can use this on cloud-managed k8s clusters, like AKS.

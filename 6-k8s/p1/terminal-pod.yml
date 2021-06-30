@@ -1,0 +1,15 @@
+﻿apiVersion: v1
+kind: Pod
+metadata:
+  name: airline-terminal
+  labels:
+    # you can define any labels you want, to categorize things you create in the cluster.
+    app: airline-terminal
+    role: webapp
+  # namespace: default
+spec:
+  containers:
+  - name: airline-terminal
+    image: jpbulloch5/revature_p1_webapp:latest
+    ports:
+    - containerPort: 8080
