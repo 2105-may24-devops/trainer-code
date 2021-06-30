@@ -41,6 +41,14 @@ services:
     image: jpbulloch5/revature_p1_webapp:latest
     # always try to restart the database rather than kill and recreate
     restart: always
+    environment:
+      DB_HOST: 'airline_db'
+      DB_PORT: '5432'
+      DB_NAME: 'airline_db'
+      DB_SCHEMANAME: 'public'
+      DB_USERNAME: 'postgres'
+      DB_PASSWORD: 'password123'
+      DB_DRIVER: 'org.postgresql.Driver'
     # set the outer:inner ports
     ports:
     - 9052:8080

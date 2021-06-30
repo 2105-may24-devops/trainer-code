@@ -1,0 +1,84 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airline-terminal-db
+  labels:
+    app: airline-terminal
+    role: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airline-terminal
+      role: db
+  template:
+    metadata:
+      labels:
+        app: airline-terminal
+        role: db
+    spec:
+      containers:
+      - name: airline-terminal-db
+        image: jpbulloch5/airline_db:test
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: airline-terminal-database-login
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: airline-terminal-database-login
+              key: password
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: airline-terminal-config
+              key: database-name
+        resources:
+          requests:
+            cpu: '250m'
+            memory: '256Mi'
+          limits:
+            cpu: '1000m'
+            memory: '512Mi'
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: db
+      volumes:
+      - name: db
+        persistentVolumeClaim:
+          claimName: airline-terminal-db-pv-claim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: airline-terminal-db
+  labels:
+    app: airline-terminal
+    role: db
+spec:
+  selector:
+    app: airline-terminal
+    role: db
+  ports:
+  - port: 5432
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: airline-terminal-db-pv-claim
+  labels:
+    app: airline-terminal
+    role: db
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
