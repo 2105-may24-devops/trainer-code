@@ -1,0 +1,29 @@
+project 2 requirements
+
+for the quiz app - https://github.com/2105-may24-devops/project2-quiz-app
+
+CI/CD
+    two redundant systems so we can fallback in case of cloud outage, and
+        so we could evaluate in practice which one fit the project's needs better
+    pipelines should include static analysis
+    pipeline with azure devops
+        separate pipelines for each service
+        use templates to share behavior across the pipelines
+    pipeline with jenkins
+        separate pipelines for each service
+        use shared libraries to share behavior across the pipelines
+docker
+    dockerize the application.
+    write compose files so that it can be tested locally without a k8s cluster.
+kubernetes
+    have both sets of pipelines deploy to an AKS cluster.
+    use YAML manifests kept in source control to manage state declaratively.
+code changes
+    evolve the codebase so that it fits better with the docker/kubernetes
+    deployment environment.
+advice
+    it's up to you how to organize and store the source code.
+        you can stick with the monorepo, or move to several repositories.
+        you can do github, azure repos, or something else.
+    you may want to build the requirements gradually one phase at a time.
+        the "phase" branches and PRs in the original repository can help with this.
