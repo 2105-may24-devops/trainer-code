@@ -47,7 +47,9 @@ advice
     it's up to you how to organize and store the source code.
         you can stick with the monorepo, or move to several repositories.
         you can do github, azure repos, or something else.
-    it's up to you how or whether to use a project board to track your work.
+    use a project board to track your work.
+        it can be something quicker to set up than Azure Boards, like Trello,
+        if you want
     you may want to build the requirements gradually one phase at a time.
         the "phase" branches and PRs in the original repository can help with this.
     you can choose how much of the pipeline steps to keep inside the Dockerfile,
