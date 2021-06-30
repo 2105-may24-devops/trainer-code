@@ -5,23 +5,35 @@ for the quiz app - https://github.com/2105-may24-devops/project2-quiz-app
 CI/CD
     two redundant systems so we can fallback in case of cloud outage, and
         so we could evaluate in practice which one fit the project's needs better
-    pipelines should include static analysis
+        (except they will also be complementary, deploying to different environments)
+    pipelines should include static analysis, PR triggers, anything else that
+        you've seen would contribute to a good CI/CD workflow.
+    two deployment environments
+        one branch goes to prod
+        another branch goes to dev
     pipeline with azure devops
         separate pipelines for each service
         use templates to share behavior across the pipelines
+        deploys to the prod environment.
     pipeline with jenkins
         separate pipelines for each service
         use shared libraries to share behavior across the pipelines
+        deploys to the dev environment.
 docker
     dockerize the application.
     write compose files so that it can be tested locally without a k8s cluster.
 kubernetes
     have both sets of pipelines deploy to an AKS cluster.
     use YAML manifests kept in source control to manage state declaratively.
+    make your own AKS cluster for the dev environment.
+    use my AKS cluster for the prod environment.
+    put thought into the deployment model/strategy and implement something
+        appropriate. try to make it easy to rollback or redeploy an older version.
+    [optional] define probes to let the cluster know more about the containers' state.
 code changes
     evolve the codebase so that it leverages docker/kubernetes
         for more deployment flexibility.
-        we can replace the gateway service with something that fits better.
+        [optional] we can replace the gateway service with something that fits better.
         we can replace the config service with something that fits better.
         we can replace the duplicate copy of the flashcard service with
             something that fits better.
