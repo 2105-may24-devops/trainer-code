@@ -20,10 +20,21 @@ kubernetes
     use YAML manifests kept in source control to manage state declaratively.
 code changes
     evolve the codebase so that it fits better with the docker/kubernetes
-    deployment environment.
+        deployment environment.
+    for code changes, collaborating directly with other teams is allowed.
+        attribute any code originally written by another team.
+    allow for database persistence.
+        the current implementation is an in-memory database.
 advice
     it's up to you how to organize and store the source code.
         you can stick with the monorepo, or move to several repositories.
         you can do github, azure repos, or something else.
     you may want to build the requirements gradually one phase at a time.
         the "phase" branches and PRs in the original repository can help with this.
+    you can choose how much of the pipeline steps to keep inside the Dockerfile,
+        and how much outside.
+        advantages of inside: more consistency and less effort between
+            azure devops and jenkins.
+        disadvantages of inside: the local image builds should be as fast as possible
+            for the devs, so you may want separate sets of dockerfiles for CI and
+            for dev. also, some things like managing secrets may take extra effort.
