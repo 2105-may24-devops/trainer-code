@@ -1,0 +1,18 @@
+﻿---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: airline-terminal-config
+data:
+  # property-like keys; each key maps to a simple value
+  database-port: '5432'
+  database-name: airline_db
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: airline-terminal-database-login
+# default type Opaque, there are other types
+stringData:
+  username: postgres
+  password: password123

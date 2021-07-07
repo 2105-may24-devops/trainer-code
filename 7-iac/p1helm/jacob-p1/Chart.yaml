@@ -1,0 +1,9 @@
+apiVersion: v2
+name: jacob-p1
+description: Chart for jacob's p1
+
+type: application
+
+version: 0.1.6
+
+appVersion: "1.1"

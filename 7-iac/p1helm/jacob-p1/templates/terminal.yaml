@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "jacob-p1.fullname" . }}
+  labels:
+    {{- include "jacob-p1.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.webappReplicaCount }}
+  selector:
+    matchLabels:
+      {{- include "jacob-p1.selectorLabels" . | nindent 6 }}
+      role: webapp
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "jacob-p1.selectorLabels" . | nindent 8 }}
+        role: webapp
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "jacob-p1.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+      - name: {{ .Chart.Name }}-webapp
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+        image: "{{ .Values.webAppImage.repository }}:{{ .Values.webAppImage.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.webAppImage.pullPolicy }}
+        env:
+        - name: DB_HOST
+          value: {{ include "jacob-p1.fullname" . }}-db
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: airline-terminal-config
+              key: database-port
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: airline-terminal-config
+              key: database-name
+        - name: DB_SCHEMANAME
+          value: public
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: airline-terminal-database-login
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: airline-terminal-database-login
+              key: password
+        - name: DB_DRIVER
+          value: org.postgresql.Driver
+        ports:
+          - name: http
+            containerPort: 8080
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /webapp/ping
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /webapp/ping
+            port: http
+        resources:
+          {{- toYaml .Values.webAppResources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

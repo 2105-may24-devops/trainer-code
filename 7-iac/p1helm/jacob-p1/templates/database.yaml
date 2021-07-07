@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "jacob-p1.fullname" . }}-db
+  labels:
+    {{- include "jacob-p1.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "jacob-p1.labels" . | nindent 6 }}
+      role: db
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "jacob-p1.labels" . | nindent 8 }}
+        role: db
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "jacob-p1.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+      - name: {{ .Chart.Name }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+        image: "{{ .Values.dbImage.repository }}:{{ .Values.dbImage.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.dbImage.pullPolicy }}
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: airline-terminal-database-login
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: airline-terminal-database-login
+              key: password
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: airline-terminal-config
+              key: database-name
+        resources:
+          requests:
+            cpu: '250m'
+            memory: '256Mi'
+          limits:
+            cpu: '1000m'
+            memory: '512Mi'
+        # volumeMounts:
+        # - mountPath: /var/lib/postgresql/data
+        #   name: db
+      # volumes:
+      # - name: db
+      #   persistentVolumeClaim:
+      #     claimName: {{ include "jacob-p1.fullname" . }}-db-pv-claim
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
