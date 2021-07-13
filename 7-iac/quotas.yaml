@@ -1,0 +1,55 @@
+﻿apiVersion: v1
+kind: List
+items:
+- apiVersion: v1
+  kind: ResourceQuota
+  metadata:
+    name: team2-compute-quota
+    namespace: team2
+  spec:
+    hard:
+      cpu: 1
+      memory: 3Gi
+    scopeSelector:
+      matchExpressions:
+      - operator : Exists
+        scopeName: NotTerminating
+- apiVersion: v1
+  kind: ResourceQuota
+  metadata:
+    name: team1-compute-quota
+    namespace: team1
+  spec:
+    hard:
+      cpu: 1
+      memory: 3Gi
+    scopeSelector:
+      matchExpressions:
+      - operator : Exists
+        scopeName: NotTerminating
+- apiVersion: v1
+  kind: ResourceQuota
+  metadata:
+    name: team3-compute-quota
+    namespace: team3
+  spec:
+    hard:
+      cpu: 1
+      memory: 3Gi
+    scopeSelector:
+      matchExpressions:
+      - operator : Exists
+        scopeName: NotTerminating
+- apiVersion: v1
+  kind: ResourceQuota
+  metadata:
+    name: team4-compute-quota
+    namespace: team4
+  spec:
+    hard:
+      cpu: 1
+      memory: 3Gi
+    scopeSelector:
+      matchExpressions:
+      - operator : Exists
+        scopeName: NotTerminating

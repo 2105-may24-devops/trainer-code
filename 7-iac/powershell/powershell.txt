@@ -1,0 +1,31 @@
+powershell
+    https://docs.microsoft.com/en-us/powershell/scripting/overview
+    built on .net (framework, core)
+    now xplat via .net core/5
+    powershell 7
+    object-oriented, not pure text-based.
+        dynamically typed like python, but variables CAN have types if you want.
+        SOME automatic conversion between types, a bit like sql.
+    cmdlets - .NET classes implement functionality
+    cmdlets connect to providers for data (file system, registry, various microsoft softwares)
+    Get-Help
+    scripts
+        https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_scripts
+    modules - package functions, cmdlets, providers, etc together.
+    conventions
+        Verb-Noun names for functions/cmdlets
+        use short aliases in the terminal
+        use long command names in scripts for readability
+        it's very case-insensitive like sql
+            the language is case-insensitive (lowercase cmdlet names if you want)
+            the default behavior of comparisons is also case-insensitive
+            usually conventional to stick to Pascal-Case-With-Dashes in scripts
+    execution policy (on windows)
+        defaults to restricted on personal windows - run cmdlets but no scripts
+        defaults to remotesigned on server windows - run local scripts, require downloaded ones to be signed
+            by a trusted certificate (sort of like HTTPS for code)
+
+tasks
+    https://github.com/vexx32/PSKoans
+        ps koans 1xx, whichever ones after that look useful to you, and redirection
+    add equivalent powershell for all bash in your p0
