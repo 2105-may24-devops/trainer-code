@@ -14,6 +14,8 @@ helm repo update
 # https://stackoverflow.com/questions/64343656/grafana-dashboard-not-working-with-ingress
 helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack \
     -f kps-values.yaml
+# grafana adminPassword is set in chart's values, username "admin".
+# also visible via: 
 
 # https://docs.microsoft.com/en-us/azure/aks/ingress-tls
 # https://docs.microsoft.com/en-us/azure/aks/ingress-internal-ip#create-an-ingress-controller
@@ -33,6 +35,11 @@ helm install ingress-nginx ingress-nginx/ingress-nginx \
 # then set to "Prometheus Operator"
 
 # https://cert-manager.io/docs/installation/kubernetes/#installing-with-helm
+
+# --- 2204 azure primer
+# loki
+# https://grafana.com/docs/loki/latest/installation/microservices-helm/
+
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
 helm install cert-manager jetstack/cert-manager \
@@ -46,3 +53,12 @@ helm install cert-manager jetstack/cert-manager \
 
 # adding these dashboards to grafana
 # https://github.com/kubernetes/ingress-nginx/tree/master/deploy/grafana/dashboards
+
+# -- 2204 azure primer, adding loki
+helm repo add grafana https://grafana.github.io/helm-charts
+helm show values grafana/loki > loki-values.yml
+# (edit)
+elm install loki grafana/loki -f loki-values.yml
+helm show values grafana/promtail > promtail-values.yml
+# (edit)
+helm install promtail grafana/promtail -f promtail-values.yml
