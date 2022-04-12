@@ -55,6 +55,7 @@ helm install cert-manager jetstack/cert-manager \
 # https://github.com/kubernetes/ingress-nginx/tree/master/deploy/grafana/dashboards
 
 # -- 2204 azure primer, adding loki
+# not using loki-stack because https://github.com/grafana/helm-charts/issues/969
 helm repo add grafana https://grafana.github.io/helm-charts
 helm show values grafana/loki > loki-values.yml
 # (edit)
