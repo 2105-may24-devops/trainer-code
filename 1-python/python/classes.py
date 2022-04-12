@@ -69,7 +69,7 @@ var = 5 # global
 if True:
     var2 = 5 # global
 
-# in python, functions and classes have their own namespaces
+# functions, including nested functions, have their own namespaces
 def func():
     var = 6 # enclosing (relative to func2)
     def print():
