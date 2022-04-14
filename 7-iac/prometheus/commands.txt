@@ -31,8 +31,7 @@ helm install ingress-nginx ingress-nginx/ingress-nginx \
     --set controller.metrics.serviceMonitor.enabled=true
 
 # metrics config in lens -
-# set to "Lens" first, set url to default/kube-prometheus-stack-prometheus:9090/prometheus
-# then set to "Prometheus Operator"
+# set to "Prometheus Operator" first, set url to default/kube-prometheus-stack-prometheus:9090/prometheus
 
 # https://cert-manager.io/docs/installation/kubernetes/#installing-with-helm
 
